@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { supabase } from '../client';
+import './ProjectForm.css'
 
 function ProjectForm() {
     const [project, setProject] = useState({
@@ -26,7 +27,7 @@ function ProjectForm() {
     }
 
     return (
-        <div>
+        <div className='project_form'>
             <h3>New Project</h3>
             <form onSubmit={handleSubmit}>
                 <div className='input_field'>
