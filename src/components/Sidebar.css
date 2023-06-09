@@ -1,0 +1,35 @@
+.sidebar {
+    width: 400px;
+    border-right: 1px solid #D8D8D8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    margin-top: 100px;
+}
+
+#app-name {
+    color: #bdb2ff;
+    margin-top: 8px;
+    margin-left: 5px;
+}
+
+.logo>img {
+    width: 40px;
+    height: 40px;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.links>a {
+    text-decoration: none;
+    color: black;
+    margin-bottom: 20px;
+}
