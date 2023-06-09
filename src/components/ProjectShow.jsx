@@ -1,53 +1,51 @@
 import React, { useState, useEffect } from 'react'
-import './Dashboard.css'
+import './ProjectShow.css'
 import Task from './Task'
 import { supabase } from '../client'
+import { useParams } from 'react-router-dom'
 
-function Dashboard() {
-    const [tasks, setTasks] = useState([])
-    const [projects, setProjects] = useState({})
+function ProjectShow() {
+    const [tasks, setTasks] = useState([]);
+    const [project, setProject] = useState("")
+    const params = useParams();
+
     useEffect(() => {
         const fetchTasks = async () => {
             const { data } = await supabase
                 .from('Task')
                 .select()
+                .eq('project_id', `${params.id}`)
                 .order("created_at", { ascending: false })
             setTasks(data)
         }
 
-        const fetchProjects = async () => {
+        const fetchProject = async () => {
             const { data } = await supabase
                 .from('Project')
                 .select()
-
-            data.map((project) => {
-                setProjects((prev) => ({
-                    ...prev,
-                    [project.id]: project.name
-                }))
-            })
+                .eq('id', `${params.id}`)
+            setProject(data[0].name)
         }
+
         fetchTasks();
-        fetchProjects();
+        fetchProject();
     }, [])
 
-
     return (
-        <div className='dashboard'>
+        <div className='project_show'>
             {tasks && tasks.map((task) => {
                 return (
                     <Task
                         key={task.id}
-                        project={projects[task.project_id]}
+                        project={project}
                         assignee={task.assignee}
                         due={task.due}
                         content={task.content}
                     />
                 )
-            }
-            )}
+            })}
         </div>
     )
 }
 
-export default Dashboard
+export default ProjectShow

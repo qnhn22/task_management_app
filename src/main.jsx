@@ -8,11 +8,33 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dashboard from './components/Dashboard.jsx';
+import ProjectsShow from './components/ProjectsShow.jsx';
+import ProjectShow from './components/ProjectShow.jsx';
+import ProjectForm from './components/ProjectForm.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />
+      },
+      {
+        path: "/projects",
+        element: <ProjectsShow />
+      },
+      {
+        path: "/projects/new",
+        element: <ProjectForm />
+      },
+      {
+        path: "/projects/:id",
+        element: <ProjectShow />
+      }
+    ]
   },
   {
     path: "/new",

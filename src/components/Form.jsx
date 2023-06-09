@@ -3,22 +3,25 @@ import "./Form.css"
 import { supabase } from '../client';
 
 function Form() {
-    const [projects, setProjects] = useState([])
+    const [projects, setProjects] = useState({})
     useEffect(() => {
         const fetchProjects = async () => {
-            const { data, error } = await supabase
-                .from('tasks')
-                .select('project')
+            const { data } = await supabase
+                .from('Project')
+                .select()
 
-            setProjects(data)
-            console.log("data" + data)
-            console.log("error" + error)
+            data.map((project) => {
+                setProjects((prev) => ({
+                    ...prev,
+                    [project.name]: project.id
+                }))
+            })
         }
         fetchProjects();
     }, [])
 
     const [task, setTask] = useState({
-        project: "",
+        project_id: "",
         assignee: "",
         due: "2022-12-22",
         content: "",
@@ -26,11 +29,11 @@ function Form() {
 
     const createTask = async (e) => {
         e.preventDefault()
-        const { error } = await supabase
-            .from('tasks')
+        const { data, error } = await supabase
+            .from('Task')
             .insert({
-                project: task.project,
-                assignee: task.project,
+                project_id: task.project_id,
+                assignee: task.assignee,
                 due: task.due,
                 content: task.content
             })
@@ -47,33 +50,34 @@ function Form() {
 
     return (
         <div className='form'>
-            <h3 className='title'>New Task</h3>
-            <form className="input_form" onSubmit={createTask}>
-                <div className='input_field'>
-                    <label className='input_label' htmlFor="project">Select a project</label><br></br>
-                    <select value={task.project} name="project" id="project" onChange={handleChange}>
-                        {projects.map((project) => (<option value={project}>{project}</option>))}
-                    </select>
-                </div>
-                <br></br>
-                <div className='input_field'>
-                    <label className='input_label' htmlFor="new_project">or create a new one</label><br></br>
-                    <input type='text' id='new_project' name='project' value={task.project} onChange={handleChange} />
-                </div>
-                <div className='input_field'>
-                    <label className='input_label' htmlFor="assignee">Assignee</label><br></br>
-                    <input type='text' id='assignee' name='assignee' value={task.assignee} onChange={handleChange} />
-                </div>
-                <div className='input_field'>
-                    <label className='input_label' htmlFor="due">Due</label><br></br>
-                    <input type='date' id='due' name='due' value={task.due} onChange={handleChange} />
-                </div>
-                <div className='input_field'>
-                    <label className='input_label' htmlFor="content">Content</label><br></br>
-                    <textarea id='content' name='content' value={task.content} onChange={handleChange} />
-                </div>
-                <input type='submit' value={"New Task"} />
-            </form>
+            {projects && (
+                <>
+                    <h3 className='title'>New Task</h3>
+                    <form className="input_form" onSubmit={createTask}>
+                        <div className='input_field'>
+                            <label className='input_label' htmlFor="project_id">Select a project</label><br></br>
+                            <select value={task.project_id} name="project_id" id="project_id" onChange={handleChange}>
+                                <option key="" value="">Choose a project</option>
+                                {Object.keys(projects).map((projectName) => (<option key={projectName} value={projects[projectName]}>{projectName}</option>))}
+                            </select>
+                        </div>
+                        <br></br>
+                        <div className='input_field'>
+                            <label className='input_label' htmlFor="assignee">Assignee</label><br></br>
+                            <input type='text' id='assignee' name='assignee' value={task.assignee} onChange={handleChange} />
+                        </div>
+                        <div className='input_field'>
+                            <label className='input_label' htmlFor="due">Due</label><br></br>
+                            <input type='date' id='due' name='due' value={task.due} onChange={handleChange} />
+                        </div>
+                        <div className='input_field'>
+                            <label className='input_label' htmlFor="content">Content</label><br></br>
+                            <textarea id='content' name='content' value={task.content} onChange={handleChange} />
+                        </div>
+                        <input type='submit' value={"New Task"} />
+                    </form>
+                </>
+            )}
         </div>
     )
 }

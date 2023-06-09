@@ -1,0 +1,16 @@
+.projects_show {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.projects_show>a {
+    text-decoration: none;
+    color: black;
+    margin-top: 20px;
+}
+
+.projects_show>a:hover {
+    color: #a663cc;
+}
