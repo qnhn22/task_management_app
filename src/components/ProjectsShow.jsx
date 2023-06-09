@@ -11,6 +11,7 @@ function ProjectsShow() {
             const { data, error } = await supabase
                 .from('Project')
                 .select()
+                .order("created_at", { ascending: false })
 
             setProjects(data)
         }

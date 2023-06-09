@@ -10,8 +10,8 @@ function ProjectForm() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProject((prevProject) => ({
-            ...prevProject,
+        setProject((prev) => ({
+            ...prev,
             [name]: value
         }))
     }
@@ -24,6 +24,7 @@ function ProjectForm() {
                 name: project.name,
                 due: project.due,
             })
+        window.location = "/projects"
     }
 
     return (
@@ -32,11 +33,11 @@ function ProjectForm() {
             <form onSubmit={handleSubmit}>
                 <div className='input_field'>
                     <label className='input_label' htmlFor='name'>Name</label><br></br>
-                    <input type='text' id='name' value={project.name} onChange={handleChange} />
+                    <input type='text' id='name' name="name" value={project.name} onChange={handleChange} />
                 </div>
                 <div className='input_field'>
                     <label className='input_label' htmlFor='due'>Due</label><br></br>
-                    <input type='date' id='due' value={project.due} onChange={handleChange} />
+                    <input type='date' id='due' name='due' value={project.due} onChange={handleChange} />
                 </div>
                 <input type='submit' value={"Create"} />
             </form>
