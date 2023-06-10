@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard.jsx';
 import ProjectsShow from './components/ProjectsShow.jsx';
 import ProjectShow from './components/ProjectShow.jsx';
 import ProjectForm from './components/ProjectForm.jsx';
+import EditTask from './components/EditTask.jsx';
 
 const router = createBrowserRouter([
   {
@@ -33,13 +34,17 @@ const router = createBrowserRouter([
       {
         path: "/projects/:id",
         element: <ProjectShow />
-      }
+      },
     ]
   },
   {
     path: "/new",
     element: <Form />
-  }
+  },
+  {
+    path: "/edit/:id",
+    element: <EditTask />
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

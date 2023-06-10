@@ -38,6 +38,7 @@ function Dashboard() {
                 return (
                     <Task
                         key={task.id}
+                        id={task.id}
                         project={projects[task.project_id]}
                         assignee={task.assignee}
                         due={task.due}
