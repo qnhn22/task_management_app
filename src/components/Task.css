@@ -24,6 +24,11 @@
     width: 50%;
 }
 
+.edit_btn>a {
+    text-decoration: none;
+    color: black;
+}
+
 .modal_close {
     border-radius: 5px;
 }

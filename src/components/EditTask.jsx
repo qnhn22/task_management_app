@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import "./Form.css"
 import { supabase } from '../client';
+import { Link, useParams } from 'react-router-dom';
 
 function EditTask() {
     const [projects, setProjects] = useState({})
+    const [task, setTask] = useState()
+    const params = useParams()
+
     useEffect(() => {
+        console.log("ahahaha")
         const fetchProjects = async () => {
             const { data } = await supabase
                 .from('Project')
@@ -19,17 +24,23 @@ function EditTask() {
         }
 
         const fetchTask = async () => {
+            const { data, error } = await supabase
+                .from('Task')
+                .select()
+                .eq('id', `${params.id}`)
 
+            setTask(data[0])
         }
         fetchProjects();
+        fetchTask();
     }, [])
 
-    const [task, setTask] = useState({
-        project_id: "",
-        assignee: "",
-        due: "2022-12-22",
-        content: "",
-    })
+    // const [task, setTask] = useState({
+    //     project_id: "",
+    //     assignee: "",
+    //     due: "2022-12-22",
+    //     content: "",
+    // })
 
 
 
@@ -56,7 +67,8 @@ function EditTask() {
 
     return (
         <div className='form'>
-            {projects && (
+            <Link to={`/`}>Home</Link>
+            {(projects && task) ? (
                 <>
                     <h3 className='title'>New Task</h3>
                     <form className="input_form" onSubmit={createTask}>
@@ -83,7 +95,8 @@ function EditTask() {
                         <input type='submit' value={"New Task"} />
                     </form>
                 </>
-            )}
+            ) :
+                <></>}
         </div>
     )
 }

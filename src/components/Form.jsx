@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./Form.css"
 import { supabase } from '../client';
+import { Link } from 'react-router-dom';
 
 function Form() {
     const [projects, setProjects] = useState({})
@@ -50,6 +51,7 @@ function Form() {
 
     return (
         <div className='form'>
+            <Link to={`/`}>Home</Link>
             {projects && (
                 <>
                     <h3 className='title'>New Task</h3>

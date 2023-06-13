@@ -3,6 +3,7 @@ import "./Task.css"
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import { supabase } from '../client';
+import { Link } from 'react-router-dom';
 
 function Task({ id, project, assignee, due, content }) {
     const [show, setShow] = useState(false)
@@ -38,7 +39,7 @@ function Task({ id, project, assignee, due, content }) {
             <p className='task_content'>Detail: {content}</p>
             <div className='task_button'>
                 <button className="done_btn" onClick={handleClick}>Done</button>
-                <button className='edit_btn' onClick={handleEdit}>Edit</button>
+                <Link to={`/edit/${id}`}><button className='edit_btn' onClick={handleEdit}>Edit</button></Link>
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Body>
